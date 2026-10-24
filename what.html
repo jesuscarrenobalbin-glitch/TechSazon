@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sazón de Casa - Restaurante & Gastronomía Peruana</title>
+    <link rel="stylesheet" href="Ace.css">
+</head>
+<body>
+
+    <!-- 1. BARRA DE NAVEGACIÓN -->
+    <header class="header-nav">
+        <a href="#" class="logo" onclick="mostrarSeccion('productos')"><span>Sazón</span> de Casa</a>
+        
+        <ul class="nav-links">
+            <li><a href="#" onclick="mostrarSeccion('productos')">Menú</a></li>
+            <li><a href="#" onclick="mostrarSeccion('servicios')">Servicios</a></li>
+            <li><a href="#" onclick="mostrarSeccion('contacto')">Contacto</a></li>
+            <li id="nav-admin-link" style="display: none;"><a href="#" onclick="mostrarSeccion('admin')" style="color: #d97706; font-weight: bold;">⚙️ Panel Admin</a></li>
+        </ul>
+        
+        <div class="nav-action" style="display: flex; gap: 10px; align-items: center;">
+            <button class="btn-login" onclick="abrirModalLogin()" style="background-color: #0f172a;" id="btn-sesion-texto">
+                👤 Mi Cuenta
+            </button>
+            <button class="btn-login" onclick="mostrarSeccion('carrito')">
+                🛒 Ver Orden (<span id="cant-carrito">0</span>)
+            </button>
+        </div>
+    </header>
+
+    <!-- Banner Superior -->
+    <div class="hero-banner">
+        <h2>Lo Mejor de la Gastronomía Peruana</h2>
+        <p>Disfruta de nuestra amplia variedad de platillos, bebidas y postres 100% peruanos preparados al instante.</p>
+    </div>
+
+    <!-- 2. CATÁLOGO DE PRODUCTOS (MENÚ) -->
+    <div id="seccion-productos" class="seccion-contenido">
+        <h3 class="t1">Nuestro Menú Completo</h3>
+        
+        <!-- Buscador -->
+        <div style="max-width: 420px; margin: 0 auto 20px auto; padding: 0 20px;">
+            <input type="text" id="input-busqueda" onkeyup="filtrarProductos()" placeholder="🔍 Buscar plato, bebida o postre..." style="width: 100%; padding: 12px 18px; border: 1px solid #cbd5e1; border-radius: 25px; font-size: 0.95rem; outline: none;">
+        </div>
+
+        <!-- Botones Interactivos de Filtro por Categoría -->
+        <div class="filter-container">
+            <button class="btn-filtro active" data-categoria="todos">Todos</button>
+            <button class="btn-filtro" data-categoria="platillo">🍲 Platillos</button>
+            <button class="btn-filtro" data-categoria="bebida">🥤 Bebidas Peruanas</button>
+            <button class="btn-filtro" data-categoria="postre">🍰 Postres Criollos</button>
+        </div>
+
+        <div class="contenedor" id="contenedor-productos">
+            <!-- ================= PLATILLOS ================= -->
+            <div class="tarjeta-producto" data-categoria="platillo">
+                <span class="badge-stock">Plato Estrella</span>
+                <img src="ceviche.png" alt="Ceviche Mixto Tradicional" class="img-producto">
+                <h4>Ceviche Mixto Tradicional</h4>
+                <p>Pesca del día, calamar y langostinos marinados en limón de pica, camote glaseado y choclo.</p>
+                <div class="precio">S/ 42.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Ceviche Mixto Tradicional', 'S/ 42.00', ['Pesca del día, calamar y langostinos frescos', 'Marinado en limón de pica peruano', 'Acompañado de camote glaseado y choclo tierno'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Ceviche Mixto Tradicional', 42.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="platillo">
+                <span class="badge-stock">Más Vendido</span>
+                <img src="Lomo.png" alt="Lomo Saltado al Wok" class="img-producto">
+                <h4>Lomo Saltado al Wok</h4>
+                <p>Trozos de lomo fino salteados a fuego alto con cebolla, tomate, papas amarillas y arroz blanco.</p>
+                <div class="precio">S/ 45.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Lomo Saltado al Wok', 'S/ 45.00', ['Corte fino de lomo de res seleccionado', 'Flameado al wok con sillao y vinagre', 'Papas amarillas crocantes y arroz con choclo'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Lomo Saltado al Wok', 45.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="platillo">
+                <span class="badge-stock">Sabor Casero</span>
+                <img src="Aji-gallina.png" alt="Ají de Gallina Cremoso" class="img-producto">
+                <h4>Ají de Gallina Cremoso</h4>
+                <p>Pechuga deshilachada en crema de ají amarillo, queso fresco, huevo sancochado y aceituna.</p>
+                <div class="precio">S/ 32.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Ají de Gallina Cremoso', 'S/ 32.00', ['Pechuga de pollo deshilachada', 'Crema de ají amarillo, leche y nueces', 'Decorado con huevo duro y aceituna de botija'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Ají de Gallina Cremoso', 32.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="platillo">
+                <span class="badge-stock">Especialidad</span>
+                <img src="Pollo a la Brasa and Papas.png" alt="1/2 Pollo a la Brasa + Papas" class="img-producto">
+                <h4>1/2 Pollo a la Brasa + Papas</h4>
+                <p>Medio pollo al carbón marinado en especias secretas, con papas nativas fritas y ensalada.</p>
+                <div class="precio">S/ 38.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('1/2 Pollo a la Brasa + Papas', 'S/ 38.00', ['Pollo crocante al carbón', 'Papas nativas y cremas de la casa'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('1/2 Pollo a la Brasa + Papas', 38.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="platillo">
+                <span class="badge-stock">Criollo</span>
+                <img src="Frejolesconseco.png" alt="Seco de Res con Frijoles" class="img-producto">
+                <h4>Seco de Res con Frijoles</h4>
+                <p>Tierno trozo de carne de res estofada en salsa de culantro y chicha de jora con frijoles cremosos.</p>
+                <div class="precio">S/ 40.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Seco de Res con Frijoles', 'S/ 40.00', ['Carne de res jugosa estofada en culantro y chicha de jora', 'Acompañado de yuca sancochada y frijoles canarios'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Seco de Res con Frijoles', 40.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="platillo">
+                <span class="badge-stock">Tradicional</span>
+                <img src="Causa Rellena de Pollo.png" alt="Causa Rellena de Pollo" class="img-producto">
+                <h4>Causa Rellena de Pollo</h4>
+                <p>Masa de papa amarilla prensada con ají amarillo y limón, rellena de pollo deshilachado con palta.</p>
+                <div class="precio">S/ 26.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Causa Rellena de Pollo', 'S/ 26.00', ['Papa amarilla con pasta de ají amarillo', 'Relleno de pollo con mayonesa y láminas de palta'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Causa Rellena de Pollo', 26.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="platillo">
+                <span class="badge-stock">Norteño</span>
+                <img src="ArrozconPato.png" alt="Arroz con Pato a la Norteña" class="img-producto">
+                <h4>Arroz con Pato a la Norteña</h4>
+                <p>Arroz jugoso impregnado en crema de culantro y chicha de jora, con presa de pato tierno y sarsa criolla.</p>
+                <div class="precio">S/ 46.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Arroz con Pato a la Norteña', 'S/ 46.00', ['Presa de pato suave y jugosa', 'Arroz cocinado con chicha de jora y culantro fresco'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Arroz con Pato a la Norteña', 46.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="platillo">
+                <span class="badge-stock">Marino</span>
+                <img src="ArrozconMariscosJugoso.png" alt="Arroz con Mariscos Jugoso" class="img-producto">
+                <h4>Arroz con Mariscos Jugoso</h4>
+                <p>Arroz graneado salteado al wok en crema de ají panca y madre de mariscos, con langostinos y calamar.</p>
+                <div class="precio">S/ 44.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Arroz con Mariscos Jugoso', 'S/ 44.00', ['Mixtura de mariscos seleccionados', 'Salsa madre de ají panca y coral', 'Sarsa criolla fresca'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Arroz con Mariscos Jugoso', 44.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="platillo">
+                <span class="badge-stock">Arequipeño</span>
+                <img src="RocotoRellenoArequipeño.png" alt="Rocoto Relleno Arequipeño" class="img-producto">
+                <h4>Rocoto Relleno Arequipeño</h4>
+                <p>Rocoto horneado relleno de carne picada a cuchillo, maní, pasas, cubierto con queso paria derretido y pastel de papa.</p>
+                <div class="precio">S/ 36.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Rocoto Relleno Arequipeño', 'S/ 36.00', ['Rocoto suave sin picor excesivo', 'Relleno de carne picada, pasas y especias', 'Acompañado de una tajada de pastel de papa'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Rocoto Relleno Arequipeño', 36.00)">Agregar al Pedido</button>
+            </div>
+
+            <!-- ================= BEBIDAS 100% PERUANAS ================= -->
+            <div class="tarjeta-producto" data-categoria="bebida">
+                <span class="badge-stock">Refrescante</span>
+                <img src="Chicha Morada de Maíz Morado.png" alt="Chicha Morada de Maíz Morado" class="img-producto">
+                <h4>Chicha Morada de Maíz Morado (1L)</h4>
+                <p>Elaborada artesanalmente con maíz morado de los Andes, piña, manzana, canela y limón fresco.</p>
+                <div class="precio">S/ 18.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Chicha Morada de Maíz Morado (1L)', 'S/ 18.00', ['Maíz morado natural hervido', 'Piña, manzana, membrillo, clavo y canela', 'Toque final de limón recién exprimido'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Chicha Morada de Maíz Morado (1L)', 18.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="bebida">
+                <span class="badge-stock">Coctelería Nacional</span>
+                <img src="Pisco Sour Catedral.png" alt="Pisco Sour Catedral" class="img-producto">
+                <h4>Pisco Sour Catedral</h4>
+                <p>Pisco quebranta puro de Ica, zumo de limón fresco, clara de huevo y amargo de Angostura.</p>
+                <div class="precio">S/ 25.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Pisco Sour Catedral', 'S/ 25.00', ['Pisco quebranta 100% puro de Ica', 'Zumo de limón recién exprimido', 'Clara de huevo emulsionada y amargo de Angostura'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Pisco Sour Catedral', 25.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="bebida">
+                <span class="badge-stock">Frutal Andina</span>
+                <img src="Maracuyá Sour Especial.png" alt="Maracuyá Sour Especial" class="img-producto">
+                <h4>Maracuyá Sour Especial</h4>
+                <p>Exótica combinación de pisco peruano con pulpa concentrada de maracuyá natural.</p>
+                <div class="precio">S/ 22.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Maracuyá Sour Especial', 'S/ 22.00', ['Pisco peruano seleccionado', 'Pulpa natural de maracuyá fresca', 'Jarabe de goma y clara de huevo'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Maracuyá Sour Especial', 22.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="bebida">
+                <span class="badge-stock">Tradición Andina</span>
+                <img src="Chicha de Jora Arequipeña.png" alt="Chicha de Jora Arequipeña" class="img-producto">
+                <h4>Chicha de Jora Arequipeña (1L)</h4>
+                <p>Bebida ancestral elaborada a base de maíz amarillo germinado (jora) fermentado suavemente.</p>
+                <div class="precio">S/ 16.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Chicha de Jora Arequipeña (1L)', 'S/ 16.00', ['Maíz amarillo germinado (Jora)', 'Cocción prolongada con chancaca y especias', 'Fermentación natural suave'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Chicha de Jora Arequipeña (1L)', 16.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="bebida">
+                <span class="badge-stock">Selva Peruana</span>
+                <img src="Camu Camu Natural Frozen.png" alt="Camu Camu Natural Frozen" class="img-producto">
+                <h4>Camu Camu Natural Frozen (1L)</h4>
+                <p>Bebida súper refrescante hecha con camu camu de la Amazonía peruana, rica en vitamina C.</p>
+                <div class="precio">S/ 20.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Camu Camu Natural Frozen (1L)', 'S/ 20.00', ['Pulpa 100% natural de Camu Camu amazónico', 'Hielo frappé y azúcar natural'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Camu Camu Natural Frozen (1L)', 20.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="bebida">
+                <span class="badge-stock">Fruta Exótica</span>
+                <img src="Jarra de Aguajina Amazónica.png" alt="Jarra de Aguajina Amazónica" class="img-producto">
+                <h4>Jarra de Aguajina Amazónica (1L)</h4>
+                <p>Refresco tradicional de la selva peruana elaborado con la pulpa madura del fruto de aguaje.</p>
+                <div class="precio">S/ 19.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Jarra de Aguajina Amazónica (1L)', 'S/ 19.00', ['Pulpa pura de fruta de aguaje seleccionada', 'Agua de manantial y toque dulce natural'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Jarra de Aguajina Amazónica (1L)', 19.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="bebida">
+                <span class="badge-stock">Popular</span>
+                <img src="Chilcano de Pisco Tradicional.png" alt="Chilcano de Pisco Tradicional" class="img-producto">
+                <h4>Chilcano de Pisco Tradicional</h4>
+                <p>Cóctel refrescante de pisco quebranta, jugo de limón, Ginger Ale y unas gotas de amargo de Angostura.</p>
+                <div class="precio">S/ 20.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Chilcano de Pisco Tradicional', 'S/ 20.00', ['Pisco quebranta 100% puro', 'Ginger Ale helado y zumo de limón fresco'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Chilcano de Pisco Tradicional', 20.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="bebida">
+                <span class="badge-stock">Emblemática</span>
+                <img src="incakola.png" alt="Inca Kola Helada" class="img-producto">
+                <h4>Inca Kola Helada (1.5L)</h4>
+                <p>La icónica bebida de sabor nacional, infaltable para acompañar la buena mesa peruana.</p>
+                <div class="precio">S/ 12.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Inca Kola Helada (1.5L)', 'S/ 12.00', ['Botella de 1.5 Litros', 'Servida bien helada'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Inca Kola Helada (1.5L)', 12.00)">Agregar al Pedido</button>
+            </div>
+
+            <!-- ================= POSTRES 100% PERUANOS ================= -->
+            <div class="tarjeta-producto" data-categoria="postre">
+                <span class="badge-stock">Tradición Limeña</span>
+                <img src="Suspiro a la Limeña.png" alt="Suspiro a la Limeña" class="img-producto">
+                <h4>Suspiro a la Limeña</h4>
+                <p>Manjar blanco de yemas casero coronado con suave merengue italiano al oporto y canela.</p>
+                <div class="precio">S/ 15.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Suspiro a la Limeña', 'S/ 15.00', ['Manjar blanco artesanal con yemitas de huevo', 'Merengue italiano aromatizado al Vino Oporto', 'Espolvoreado con canela molida'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Suspiro a la Limeña', 15.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="postre">
+                <span class="badge-stock">Crocante & Calientito</span>
+                <img src="Picarones con Miel de Chancaca.png" alt="Picarones con Miel de Chancaca" class="img-producto">
+                <h4>Picarones con Miel de Chancaca</h4>
+                <p>Porción de 4 picarones crujientes de zapallo y camote bañados en fina miel de chancaca e higo.</p>
+                <div class="precio">S/ 14.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Picarones con Miel de Chancaca', 'S/ 14.00', ['Masa de camote amarillo y zapallo macre', 'Miel de chancaca aromática con hojas de higo y clavo'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Picarones con Miel de Chancaca', 14.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="postre">
+                <span class="badge-stock">Clásico Criollo</span>
+                <img src="Mazamorra Morada and Arroz con Leche.png" alt="Combinado Criollo" class="img-producto">
+                <h4>Combinado: Mazamorra Morada + Arroz con Leche</h4>
+                <p>El clásico "Sol y Sombra" limeño con mazamorra de maíz morado y cremoso arroz con leche.</p>
+                <div class="precio">S/ 13.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Combinado Criollo', 'S/ 13.00', ['Mazamorra morada con guindones, orejones y pasas', 'Arroz con leche casero perfumado con canela y cáscara de naranja'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Combinado Criollo', 13.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="postre">
+                <span class="badge-stock">Antiguo Perú</span>
+                <img src="Ranfañote Antiguo Limeño.png" alt="Ranfañote Antiguo Limeño" class="img-producto">
+                <h4>Ranfañote Antiguo Limeño</h4>
+                <p>El postre más antiguo de Lima: trozos de pan tostado bañados en miel de chancaca, queso y nueces.</p>
+                <div class="precio">S/ 16.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Ranfañote Antiguo Limeño', 'S/ 16.00', ['Pan frito en mantequilla', 'Miel concentrada de chancaca y naranja', 'Queso fresco picado, nueces y pasas'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Ranfañote Antiguo Limeño', 16.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="postre">
+                <span class="badge-stock">Arequipeño</span>
+                <img src="Queso Helado Arequipeño Tradicional.png" alt="Queso Helado Arequipeño" class="img-producto">
+                <h4>Queso Helado Arequipeño Tradicional</h4>
+                <p>Cremoso postre helado a base de leche, coco rallado y canela, típico de la Ciudad Blanca.</p>
+                <div class="precio">S/ 12.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Queso Helado Arequipeño', 'S/ 12.00', ['Leche fresca y evaporada batida', 'Coco rallado y esencia de vainilla', 'Abundante canela molida encima'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Queso Helado Arequipeño', 12.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="postre">
+                <span class="badge-stock">Norteño</span>
+                <img src="King Kong de Manjar blanco y Piña.png" alt="King Kong Chiclayano" class="img-producto">
+                <h4>King Kong de Manjar blanco y Piña</h4>
+                <p>Tradicional alfajor gigante de origen chiclayano relleno de manjar blanco, dulce de piña y membrillo.</p>
+                <div class="precio">S/ 15.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('King Kong Chiclayano', 'S/ 15.00', ['Hojarascas de galleta crocante', 'Manjar blanco casero', 'Dulce artesanal de piña y membrillo'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('King Kong Chiclayano', 15.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="postre">
+                <span class="badge-stock">Ancestral</span>
+                <img src="Frejol Colado Cañetano.png" alt="Frejol Colado Cañetano" class="img-producto">
+                <h4>Frejol Colado Cañetano</h4>
+                <p>Suave crema dulce a base de frejol negro molido, chancaca, leche evaporada y ajonjolí tostado.</p>
+                <div class="precio">S/ 14.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Frejol Colado Cañetano', 'S/ 14.00', ['Frejol negro tamizado a mano', 'Chancaca pura y leche evaporada', 'Decorado con ajonjolí blanco tostado'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Frejol Colado Cañetano', 14.00)">Agregar al Pedido</button>
+            </div>
+
+            <div class="tarjeta-producto" data-categoria="postre">
+                <span class="badge-stock">Suave & Esponjoso</span>
+                <img src="Crema Volteada de Quinoa.png" alt="Crema Volteada de Quinoa" class="img-producto">
+                <h4>Crema Volteada de Quinoa y Vainilla</h4>
+                <p>Deliciosa variante peruana del flan con quinua perlada, leche condensada y acaramelado rubio.</p>
+                <div class="precio">S/ 15.00</div>
+                <button class="btn-detalle" onclick="mostrarDetallesEnPantalla('Crema Volteada de Quinoa', 'S/ 15.00', ['Quinua perlada sancochada', 'Mezcla de leche condensada y huevos', 'Caramelo rubio artesanal'])">👁️ Ver qué contiene</button>
+                <button class="btn-detalle btn-primary" onclick="agregarAlCarrito('Crema Volteada de Quinoa', 15.00)">Agregar al Pedido</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. SECCIÓN: SERVICIOS -->
+    <div id="seccion-servicios" class="seccion-contenido" style="display: none;">
+        <div class="caja-login">
+            <h2>Nuestros Servicios Gastronómicos</h2>
+            <p style="color: #64748b; font-size: 0.95rem; margin-top: 10px;">• Delivery Express Térmico a todo Lima<br>• Catering Criollo para Eventos y Cumpleaños<br>• Atención Especial a Empresas</p>
+            <button class="btn-detalle btn-primary" onclick="mostrarSeccion('productos')" style="margin-top: 20px;">Volver al Menú</button>
+        </div>
+    </div>
+
+    <!-- 4. SECCIÓN: CONTACTO -->
+    <div id="seccion-contacto" class="seccion-contenido" style="display: none;">
+        <div class="caja-login">
+            <h2>Ubícanos & Reservas</h2>
+            <p style="color: #64748b; font-size: 0.9rem; margin: 15px 0;">📍 Av. Garcilaso de la Vega 1351, Lima - Perú<br>📞 Central Yape & WhatsApp: +51 900 187 321</p>
+            <button class="btn-detalle btn-primary" onclick="mostrarSeccion('productos')">Regresar al Menú</button>
+        </div>
+    </div>
+
+    <!-- 5. SECCIÓN: PANEL DE ADMINISTRADOR (VER ÓRDENES) -->
+    <div id="seccion-admin" class="seccion-contenido" style="display: none;">
+        <div class="caja-login" style="max-width: 700px;">
+            <h2 style="color: #d97706;">⚙️ Panel de Órdenes del Administrador</h2>
+            <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 20px;">Lista de pedidos recibidos por los clientes en tiempo real:</p>
+            
+            <div id="lista-ordenes-admin" style="background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px solid #cbd5e1; text-align: left; margin-bottom: 20px; max-height: 350px; overflow-y: auto;">
+                <p style="color: #64748b; text-align: center;">No hay órdenes registradas aún.</p>
+            </div>
+
+            <button class="btn-detalle btn-primary" onclick="cerrarSesion()" style="background-color: #ef4444; border-color: #ef4444;">
+                🚪 Cerrar Sesión de Administrador
+            </button>
+        </div>
+    </div>
+
+    <!-- 6. RESUMEN DE CARRITO Y OPCIONES DE PAGO -->
+    <div id="seccion-carrito" class="seccion-contenido" style="display: none;">
+        <div class="caja-login">
+            <h2>Detalle de tu Orden</h2>
+            <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 20px;">Revisa tu pedido antes de proceder al pago seguro.</p>
+            
+            <div id="lista-carrito-html" style="text-align: left; background: #f8fafc; padding: 15px; border-radius: 12px; margin-bottom: 20px; max-height: 250px; overflow-y: auto; border: 1px solid #e2e8f0;">
+                <p style="color: #64748b; text-align: center;">Tu carrito está vacío.</p>
+            </div>
+
+            <div style="font-size: 1.25rem; font-weight: bold; margin-bottom: 20px; color: #15803d;">
+                Total a Pagar: S/ <span id="total-carrito-html">0.00</span>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <!-- Botón Yapeo Seguro -->
+                <button class="btn-detalle" onclick="abrirModalYape()" style="background-color: #71237a; color: #ffffff; border-color: #71237a; font-size: 1rem; padding: 12px;">
+                    📱 Pagar con YAPEO SEGURO (QR)
+                </button>
+                
+                <!-- Botón Pedir directo WhatsApp -->
+                <button class="btn-detalle" onclick="enviarPedidoWhatsApp('Contraentrega')" style="background-color: #25d366; color: #ffffff; border-color: #25d366;">
+                    💬 Pedir por WhatsApp (Pago Contraentrega)
+                </button>
+
+                <button class="btn-detalle" onclick="mostrarSeccion('productos')" style="background-color: #f1f5f9; color: #475569;">
+                    ⬅️ Seguir viendo el menú
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE ACCESO / CREAR CUENTA -->
+    <div id="modal-overlay-login" class="modal-overlay">
+        <div class="seccion-detalles" style="max-width: 420px; border-color: #0f172a;">
+            <h3 style="color: #0f172a; margin-bottom: 10px;">🔐 Gestión de Cuenta</h3>
+            <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 15px;" id="login-subtext">Inicia sesión o regístrate como cliente para hacer tus pedidos.</p>
+            
+            <!-- Botones iniciales de selección -->
+            <div id="opciones-acceso" style="display: flex; flex-direction: column; gap: 10px;">
+                <button class="btn-detalle btn-primary" onclick="mostrarFormRegistro()" style="background: #15803d; border-color: #15803d;">
+                    📝 Crear Cuenta de Cliente
+                </button>
+                <button class="btn-detalle" onclick="mostrarFormLoginCliente()" style="background: #f1f5f9; color: #334155;">
+                    🔑 Iniciar Sesión Cliente
+                </button>
+                <button class="btn-detalle" onclick="mostrarInputAdmin()" style="background: #d97706; color: white; border-color: #d97706;">
+                    ⚙️ Acceso Administrador
+                </button>
+            </div>
+
+            <!-- Formulario de Registro de Cliente -->
+            <div id="form-registro" style="display: none; text-align: left; margin-top: 10px;">
+                <label style="font-size: 0.75rem; font-weight: bold; color: #334155;">Nombre completo:</label>
+                <input type="text" id="reg-nombre" placeholder="Ej. Maria Lopez" style="width: 100%; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.85rem; margin-bottom: 6px;">
+                
+                <label style="font-size: 0.75rem; font-weight: bold; color: #334155;">Celular / WhatsApp:</label>
+                <input type="text" id="reg-telefono" placeholder="Ej. 987654321" style="width: 100%; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.85rem; margin-bottom: 6px;">
+
+                <label style="font-size: 0.75rem; font-weight: bold; color: #334155;">Dirección de entrega:</label>
+                <input type="text" id="reg-direccion" placeholder="Ej. Av. Larco 456, Miraflores" style="width: 100%; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.85rem; margin-bottom: 10px;">
+
+                <button onclick="registrarCliente()" class="btn-detalle btn-primary" style="padding: 8px;">Registrarse y Entrar</button>
+            </div>
+
+            <!-- Formulario Login Administrador -->
+            <div id="admin-password-box" style="display: none; margin-top: 10px; text-align: left; background: #fdf8f6; padding: 10px; border-radius: 8px; border: 1px solid #fde68a;">
+                <label style="font-size: 0.75rem; font-weight: bold; color: #92400e; display: block; margin-bottom: 4px;">Contraseña de Administrador:</label>
+                <input type="password" id="input-admin-pass" placeholder="Ingresa contraseña" style="width: 100%; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.9rem; margin-bottom: 8px;">
+                <button onclick="validarAdminPass()" class="btn-detalle btn-primary" style="padding: 6px; font-size: 0.8rem;">Verificar Acceso</button>
+            </div>
+
+            <button class="btn-detalle" onclick="cerrarModal('modal-overlay-login')" style="margin-top: 15px; background: #f1f5f9; color: #64748b; padding: 8px;">
+                Cancelar
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL DETALLES DEL PRODUCTO -->
+    <div id="modal-overlay-detalles" class="modal-overlay">
+        <div class="seccion-detalles">
+            <h4 id="det-titulo" style="color: #d97706; font-size: 1.4rem;"></h4>
+            <div id="det-precio" class="precio" style="max-width: 220px; margin: 10px auto;"></div>
+            <p style="font-weight: bold; color: #334155; margin-top: 10px;">Contenido e Ingredientes:</p>
+            <ul id="det-lista"></ul>
+            <button class="btn-detalle btn-primary" onclick="cerrarModal('modal-overlay-detalles')">Cerrar información</button>
+        </div>
+    </div>
+
+    <!-- MODAL YAPEO SEGURO -->
+    <div id="modal-overlay-yape" class="modal-overlay">
+        <div class="seccion-detalles" style="border-color: #71237a; max-width: 440px;">
+            <span class="security-badge">🔒 YAPEO SEGURO - VERIFICACIÓN EN TIEMPO REAL</span>
+            <h3 style="color: #71237a; margin-bottom: 2px;">Escanea y Yapea</h3>
+            <p style="font-size: 0.85rem; color: #475569; margin-bottom: 8px;">Titular: <strong>Jean Carlos Jesus</strong></p>
+            
+            <div class="yape-box" style="padding: 12px; margin: 10px 0;">
+                <div style="background: white; padding: 8px; border-radius: 12px; display: inline-block;">
+                    <!-- QR Yape real -->
+                    <img src="QRYape.png" alt="QR Yape Jesus Jean Carlos Carreno Balbin" style="width: 170px; height: 170px; object-fit: contain; display: block; margin: 0 auto;">
+                </div>
+                <p style="font-size: 1.15rem; font-weight: bold; margin-top: 8px;">
+                    Monto Total: S/ <span id="yape-monto-total">0.00</span>
+                </p>
+            </div>
+
+            <div style="text-align: left; background: #fdf4ff; border: 1px solid #f0abfc; padding: 10px; border-radius: 10px; margin-bottom: 12px;">
+                <label style="font-size: 0.78rem; font-weight: bold; color: #701a75; display: block; margin-bottom: 4px;">
+                    Código de Validación de Seguridad Yape:
+                </label>
+                <div style="display: flex; gap: 8px;">
+                    <input type="text" id="codigo-yape-input" placeholder="Ej. 849201" style="flex: 1; padding: 7px; border-radius: 6px; border: 1px solid #cbd5e1; font-weight: bold; outline: none; font-size: 0.9rem;">
+                    <button onclick="validarYapeSeguro()" style="background: #71237a; color: white; border: none; padding: 7px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.85rem;">
+                        Validar
+                    </button>
+                </div>
+                <small style="font-size: 0.68rem; color: #a21caf;">Ingresa los últimos dígitos de tu constancia para validar el pago.</small>
+            </div>
+
+            <button class="btn-detalle" onclick="confirmarYapeYEnviar()" style="background-color: #25d366; color: white; border-color: #25d366; margin-bottom: 6px; padding: 10px;">
+                ✅ Confirmar y Enviar Pedido por WhatsApp
+            </button>
+            <button class="btn-detalle" onclick="cerrarModal('modal-overlay-yape')" style="background-color: #f1f5f9; color: #64748b; padding: 8px;">
+                Cancelar
+            </button>
+        </div>
+    </div>
+
+    <script src="scripter.js"></script>
+</body>
+</html>
